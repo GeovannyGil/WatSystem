@@ -1,16 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
-body {
-  margin: 0;
-  font-family: "Poppins", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 html{
   box-sizing: border-box;
 }
 
-*,*::before, *::after{
-  box-sizing: inherit;
+*, ::before, ::after {
+  box-sizing: border-box;
 }

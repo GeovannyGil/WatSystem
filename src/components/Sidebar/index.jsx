@@ -1,73 +1,163 @@
-import { useState } from 'react'
+// import { useState } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import * as FaIcons from 'react-icons/fa'
-import * as AiIcons from 'react-icons/ai'
+import isotipo from '@/assets/img/isotipo-WatsyD-24px.svg'
+import logotipo from '@/assets/img/Logotipo-WatsyD-24px.svg'
 import { SidebarData } from './SidebarData'
-import Submenu from './SubMenu'
-import { IconContext } from 'react-icons/lib'
+import Navs, { NavLink, NavName } from './NavsLinks'
+import { IoMdLogOut } from 'react-icons/io'
 
 const Nav = styled.div`
-  background: #15171c;
-  height: 80px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`
-
-const NavIcon = styled(Link)`
-  margin-left: 2rem;
-  font-size: 2rem;
-  height: 80px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`
-
-const SidebarNav = styled.nav`
-  background: #15171c;
-  width: 250px;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
   position: fixed;
   top: 0;
-  left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
-  transition: 350ms;
-  z-index: 10;
+  left: -100%;
+  height: 100vh;
+  transition: .4s;
+  z-index: var(--z-fixed);
+  padding: 1rem 1rem 3rem;
+  background-color: var(--alternate-background);
+
+  &::-webkit-scrollbar{
+    display: none; /* For Google Chrome and others */
+  }
+
+  &.Nav__logo{
+    font-weight: var(--font-semi-bold);
+    margin-bottom: 2.5rem;
+  }
+
+  .Nav__items{
+    display: grid;
+    row-gap: 1.5rem;
+  }
+
+  .Nav__subtitle{
+    margin-top: 1rem;
+    font-size: var(--normal-font-size);
+    text-transform: uppercase;
+    letter-spacing: .1rem;
+    color: var(--text-color-light);
+  }
+
+  .Nav__icon-iso{
+    display: none;
+  }
+
+  .Nav__icon-lgtipo{
+    width: 100%;
+  }
+
+  @media screen and (min-width: 768px){
+    left: 0;
+    padding: 3rem 1.5rem 3rem;
+    width: 68px;
+
+    .Nav__items{
+      row-gap: 1.7rem;
+    }
+
+    .Nav__icon-iso{
+      display: block;
+      transition: .2s ease-in-out;
+    }
+
+    .Nav__icon-lgtipo{
+      display: none;
+      transition: .2s ease-in-out;
+    }
+
+    .Nav__logo-name,
+    ${NavName},
+    .Nav__subtitle,
+    .Nav__dropdown-icon{
+      opacity: 0;
+      transition: .3s;
+    }
+
+    &:hover{
+      width: var(--nav-width);
+    }
+
+    &:hover .Nav__logo-name{
+      opacity: 1;
+    }
+
+    &:hover .Nav__icon-iso{
+      display: none;
+      transition: .2s ease-in-out;
+    }
+    &:hover .Nav__icon-lgtipo{
+      display: block;
+      width: 100%;
+      transition: .2s ease-in-out;
+    }
+
+    &:hover .Nav__subtitle{
+      opacity: 1;
+    }
+    &:hover ${NavName}{
+      opacity: 1;
+    }
+    &:hover .Nav__dropdown-icon{
+      opacity: 1;
+    }
+  }
+
+`
+const NavContainer = styled.nav`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  scrollbar-width: none; /* For Mozilla */
 `
 
-const SidebarWrap = styled.div`
-  width: 100%;
+const NavList = styled.div`
+  display: grid;
+  row-gap: 2.5rem;
+`
+
+const Logout = styled(NavLink)`
+  margin-top: 5rem;
+
+  ${NavName}{
+    font-size: var(--small-font-size);
+    font-weight: var(--font-medium);
+    white-space: nowrap;
+    margin-left: 20px;
+  }
 `
 
 const Sidebar = () => {
-  const [sidebar, setSidebar] = useState(false)
-
-  const showSidebar = () => setSidebar(!sidebar)
-
   return (
-    <>
-      <IconContext.Provider value={{ color: 'orange' }}>
-        <Nav>
-          <NavIcon to='#'>
-            <FaIcons.FaBars onClick={showSidebar} />
-          </NavIcon>
-        </Nav>
-        <SidebarNav sidebar={sidebar}>
-          <SidebarWrap>
-            <NavIcon to='#'>
-              <AiIcons.AiOutlineClose onClick={showSidebar} />
-            </NavIcon>
+    <Nav id='NavBar'>
+      <NavContainer>
+        <div>
+          <Link to='/' className='Nav__link Nav__logo'>
+            <img src={isotipo} className='Nav__icon-iso' />
+            <img src={logotipo} className='Nav__icon-lgtipo' />
+          </Link>
+          <NavList>
             {
-              SidebarData.map((props, i) => {
-                return <Submenu {...props} key={i} />
+              SidebarData.map((item, i) => {
+                return (
+                  <div key={i} className='Nav__items'>
+                    <h3 className='Nav__subtitle'>{item.tag}</h3>
+                    <Navs items={item.navs} />
+                  </div>
+                )
               })
             }
-          </SidebarWrap>
-        </SidebarNav>
-      </IconContext.Provider>
-    </>
+
+          </NavList>
+        </div>
+        {/* <Logout to='/'>
+          <IoMdLogOut />
+          <NavName>Logout</NavName>
+        </Logout> */}
+      </NavContainer>
+    </Nav>
   )
 }
 

@@ -6,6 +6,7 @@ import { lightTheme, darkTheme } from '@/components/Styles/Theme'
 import './App.css'
 import Toggler from '@/components/Styles/Toggler'
 import Sidebar from '@/components/Sidebar/index'
+import Header from '@/components/BarTop/index'
 import Dashboard from '@/pages/dashboard'
 import Clients from '@/pages/clients'
 import Colaborators from '@/pages/colaborators'
@@ -20,6 +21,7 @@ function App () {
     <ThemeProvider theme={themeMode}>
       <GlobalStyles />
       <Router>
+        <Header />
         <Sidebar />
         <Toggler theme={theme} toggleTheme={themeToggler} />
         <Routes>

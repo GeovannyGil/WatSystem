@@ -2,9 +2,9 @@ import { func, string } from 'prop-types'
 import styled from 'styled-components'
 
 const Button = styled.button`
-  background: ${({ theme }) => theme.backgroundColor};
-  border: 2px solid ${({ theme }) => theme.primaryColor};
-  color: ${({ theme }) => theme.fontColor};
+  background: var(--background-color);
+  border: 2px solid var(--primary-color);
+  color: var(--font-color);
   border-radius: 30px;
   cursor: pointer;
   font-size:0.8rem;
