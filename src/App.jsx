@@ -14,7 +14,7 @@ import Orders from '@/pages/documents/orders'
 function App () {
   const [theme, themeToggler] = useDarkMode()
 
-  const themeMode = theme === 'light' ? lightTheme : darkTheme
+  const themeMode = theme === 'dark' ? darkTheme : lightTheme
 
   return (
     <ThemeProvider theme={themeMode}>
