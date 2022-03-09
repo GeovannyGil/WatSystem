@@ -1,12 +1,17 @@
+import path from 'path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   esbuild: {
     jsxFactory: '_jsx',
     jsxFragment: 'Fragment',
-    jsxInject: `import { createElement as _jsx, Fragment as _jsxFragment } from 'react'`,
+    jsxInject: 'import { createElement as _jsx, Fragment as _jsxFragment } from \'react\''
   },
-  plugins: [react()]
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, '/src')
+    }
+  }
 })
