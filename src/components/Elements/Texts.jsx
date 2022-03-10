@@ -9,7 +9,7 @@ export const TitleLine = styled.h4`
   margin-bottom: 10px;
 `
 
-const TitleHeader = styled.h2`
+export const TitleHeader = styled.h2`
   color: var(--color-white);
   font-size:var(--title-section-font-size);
   font-weight: var(--font-semi-bold);
@@ -17,6 +17,15 @@ const TitleHeader = styled.h2`
   .Focus__title{
     color: var(--primary-color);
   }
+`
+export const SubTitles = styled.h5`
+  color: var(--color-gray-light);
+  font-size: var(--normal-font-size);
+`
+export const TextDescription = styled.div`
+  color: var(--primary-color);
+  font-size: var(--smaller-font-size);
+  display: block;
 `
 export const TitleMain = ({ textNeutral, textColor }) => {
   return (

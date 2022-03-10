@@ -1,3 +1,6 @@
+import { ButtonIcon } from '@/components/Elements/Buttons'
+import { SubTitles } from '@/components/Elements/Texts'
+import * as BoxIcon from 'react-icons/bi'
 import styled from 'styled-components'
 
 export const CardContent = styled.div`
@@ -67,24 +70,21 @@ export const CardItem = styled.div`
   }
 `
 
-export const CardItemActions = styled.div`
-  text-align: right;
-
-  & button{
-    background-color: transparent;
-    border: none;
-    font-size: calc(var(--small-font-size) * 1.2);
-    padding: 0;
-    color: var(--color-white);
-    margin: 0 5px;
-    cursor: pointer;
-
-    &.active{
-      color: var(--primary-color);
-    }
-
-    &:hover{
-      color: var(--primary-color);
-    }
-  }
+const DescriptionCard = styled.div`
+   header{
+    display: flex;
+    align-items: center;
+   }
 `
+
+export const CardDescription = ({ label, children }) => {
+  return (
+    <DescriptionCard>
+      <header>
+        <SubTitles>{label}</SubTitles>
+        <ButtonIcon><BoxIcon.BiEdit size='1.2em' /></ButtonIcon>
+      </header>
+      {children}
+    </DescriptionCard>
+  )
+}
