@@ -4,7 +4,7 @@ import { useDarkMode } from '@/hooks/useDarkMode'
 import { GlobalStyles } from '@/components/Styles/GlobalStyles'
 import { lightTheme, darkTheme } from '@/components/Styles/Theme'
 import './App.css'
-import Toggler from '@/components/Styles/Toggler'
+// import Toggler from '@/components/Styles/Toggler'
 import Sidebar from '@/components/Sidebar/index'
 import Header from '@/components/BarTop/index'
 import Dashboard from '@/pages/dashboard'
@@ -23,7 +23,7 @@ function App () {
       <Router>
         <Header />
         <Sidebar />
-        <Toggler theme={theme} toggleTheme={themeToggler} />
+        {/* <Toggler theme={theme} toggleTheme={themeToggler} /> */}
         <Routes>
           <Route path='/dashboard' exact element={<Dashboard />} />
           <Route path='/clients' exact element={<Clients />} />

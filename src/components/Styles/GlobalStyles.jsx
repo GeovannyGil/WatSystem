@@ -17,6 +17,7 @@ export const GlobalStyles = createGlobalStyle`
     --color-gray: ${({ theme }) => theme.gray};
     --color-gray-light: ${({ theme }) => theme.grayLight};
 
+    --border-style: 2px solid var(--primary-color);
     /*============== FONT AND TIPOGRAPHY ==============*/
     --body-font: 'Poppins', sans-serif;
     --icon-action-text: 2rem;
@@ -77,6 +78,34 @@ export const GlobalStyles = createGlobalStyle`
     height: auto;
   }
 
+  button{
+    background-color: transparent;
+    border: none;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: transparent var(--primary-color);
+  }
+
+  /* Works on Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 25px;
+  }
+
+  ::-webkit-calendar-picker-indicator {
+    filter: ${({ theme }) => (theme === 'darkTheme') ? 'invert(0)' : 'invert(1)'};
+  }
+
   /*============== HEADER ==============*/
   .Header{
     top: 0;
@@ -129,7 +158,7 @@ export const GlobalStyles = createGlobalStyle`
     color: var(--color-white);
 
     &::placeholder{
-      color: var(--color-gray-light);
+      color: var(--color-font);
     }
   }
 
@@ -184,6 +213,61 @@ export const GlobalStyles = createGlobalStyle`
     }
   }
 
+  /*================= STYLES GENERALS ELEMENTS =====================*/
+  /* BUTTON */
+  .Btn__{
+    border-radius: 12px;
+    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.01);
+    color: var(--color-white);
+    cursor: pointer;
+    font-size: var(--btn-primary-font-size);
+    font-weight: var(--font-semi-bold);
+    margin-bottom: 15px;
+    padding: 15px 25px;
+
+    &.Btn__primary{
+      background-color: var(--primary-color);
+      border: none;
+
+      &:hover{
+        background-color: var(--primary-color-saturate);
+      }
+    }
+
+    &.Btn__secondary{
+      background-color: transparent;
+      border: var(--border-style);
+
+      &:hover{
+        background-color: var(--primary-color-saturate)
+      }
+    }
+
+    &.Btn__block{
+      width: 100%;
+    }
+
+    &.Btn__small{
+      font-size: var(--small-font-size);
+      padding: 8px 25px;
+    }
+  }
+
+  .Btn__icon{
+    color: var(--color-white);
+    cursor: pointer;
+    font-size: var(--btn-primary-font-size);
+    font-weight: var(--font-semi-bold);
+
+    &:hover{
+      color: var(--primary-color);
+    }
+  }
+
+  /*================= CONTENT MAIN GENERAL=====================*/
+  .Header__main-content{
+    margin-bottom: 15px;
+  }
 
   .title-page{
     display: flex;
