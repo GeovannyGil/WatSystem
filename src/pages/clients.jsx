@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { TitleMain } from '@/components/Elements/TItleMain'
+import { TitleMain } from '@/components/Elements/Texts'
 import { CardItemClientPhone, CardItemClientDirection } from '@/components/Elements/CardItemsClients'
 import {
   CardContent,

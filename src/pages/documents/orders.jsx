@@ -1,7 +1,7 @@
 
 import styled from 'styled-components'
-import { TitleMain, TitleLine } from '@/components/Elements/TItleMain'
-import { CardContent, CardHeader, CardTitle } from '@/components/Elements/Cards'
+import { TitleMain, TitleLine, TextDescription } from '@/components/Elements/Texts'
+import { CardContent, CardHeader, CardTitle, CardDescription } from '@/components/Elements/Cards'
 import * as BoxIcon from 'react-icons/bi'
 import { CheckInput, InputElement, InputElementSelect, FormGroupAction } from '@/components/Elements/Inputs'
 
@@ -37,9 +37,7 @@ const SpanSelectClient = styled.span`
   width: 100%;
   margin: 10px 0;
 `
-// const SectionClientTable = styled.div`
-//   /* outline: 2px solid orange ; */
-// `
+//  outline: 2px solid orange ;
 
 const Orders = () => {
   return (
@@ -84,6 +82,14 @@ const Orders = () => {
           <CheckInput text='Agendar Cita'>
             <input type='checkbox' />
           </CheckInput>
+          <CardDescription label='Datos de la cita'>
+            <TextDescription>
+              0 Av. 7-7 Buena vista, Sumpango Sacatepéquez
+            </TextDescription>
+            <TextDescription>
+              05 de Noviembre del 2021 15:00hrs
+            </TextDescription>
+          </CardDescription>
         </FormOrder>
       </SectionCreateOrder>
     </main>
