@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { TitleMain, TitleLine, TextDescription, SpanLabelLink } from '@/components/Elements/Texts'
 import { HeaderTitleSection } from '@/components/Elements/Layout'
 import { CardContent, CardHeader, CardTitle, CardDescription } from '@/components/Elements/Cards'
+import { ButtonPrimary, ButtonSecondary } from '../../components/Elements/Buttons'
 import * as BoxIcon from 'react-icons/bi'
 import { CheckInput, InputElement, InputElementSelect, FormGroupAction } from '@/components/Elements/Inputs'
 import { Tiptap } from '@/components/Elements/RichText'
@@ -58,6 +59,19 @@ const SpanOrderId = styled(SpanLabelLink)`
 
 const HeaderTitle = styled(HeaderTitleSection)`
   margin-bottom: 25px;
+`
+
+const ContentBtnActions = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+`
+
+const BtnAction = styled(ButtonPrimary, ButtonSecondary)`
+    width: 100%;
+  @media(min-width: 680px) {
+    width: auto;
+  }
 `
 
 const Orders = () => {
@@ -122,6 +136,9 @@ const Orders = () => {
         </FormOrder>
         <SectionRichText>
           <Tiptap />
+          <ContentBtnActions>
+            <BtnAction><BoxIcon.BiDetail /> Generar Orden</BtnAction>
+          </ContentBtnActions>
         </SectionRichText>
       </SectionCreateOrder>
     </main>

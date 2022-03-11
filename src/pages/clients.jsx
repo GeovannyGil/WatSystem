@@ -12,6 +12,7 @@ import {
   InputElement,
   FormGroupAction
 } from '@/components/Elements/Inputs'
+import { ButtonPrimary } from '@/components/Elements/Buttons'
 import * as BoxIcon from 'react-icons/bi'
 
 const Grid = styled.div`
@@ -79,7 +80,7 @@ const Clients = () => {
           <InputElement label='Correo Electrónico'>
             <input type='text' />
           </InputElement>
-          <button className='Btn__ Btn__primary Btn__block'>Agregar Cliente</button>
+          <ButtonPrimary size='100%'>Agregar Cliente</ButtonPrimary>
         </FormClient>
         <SectionClientTable>
           <Grid>

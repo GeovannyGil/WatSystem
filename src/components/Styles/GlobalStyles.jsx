@@ -215,43 +215,7 @@ export const GlobalStyles = createGlobalStyle`
 
   /*================= STYLES GENERALS ELEMENTS =====================*/
   /* BUTTON */
-  .Btn__{
-    border-radius: 12px;
-    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.01);
-    color: var(--color-white);
-    cursor: pointer;
-    font-size: var(--btn-primary-font-size);
-    font-weight: var(--font-semi-bold);
-    margin-bottom: 15px;
-    padding: 15px 25px;
 
-    &.Btn__primary{
-      background-color: var(--primary-color);
-      border: none;
-
-      &:hover{
-        background-color: var(--primary-color-saturate);
-      }
-    }
-
-    &.Btn__secondary{
-      background-color: transparent;
-      border: var(--border-style);
-
-      &:hover{
-        background-color: var(--primary-color-saturate)
-      }
-    }
-
-    &.Btn__block{
-      width: 100%;
-    }
-
-    &.Btn__small{
-      font-size: var(--small-font-size);
-      padding: 8px 25px;
-    }
-  }
 
   .Btn__icon{
     color: var(--color-white);
