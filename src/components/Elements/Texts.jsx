@@ -39,6 +39,15 @@ export const SpanLabelLink = styled.span`
   }
 `
 
+export const SpanSelect = styled.span`
+  color: var(--color-white);
+  font-size: var(--smaller-font-size);
+  font-weight: var(--normal-font-size);
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+`
+
 export const TitleMain = ({ textNeutral, textColor }) => {
   return (
     <TitleHeader>{textNeutral}<span className='Focus__title'>{textColor}</span></TitleHeader>

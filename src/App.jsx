@@ -11,6 +11,7 @@ import Dashboard from '@/pages/dashboard'
 import Clients from '@/pages/clients'
 import Colaborators from '@/pages/colaborators'
 import Orders from '@/pages/documents/orders'
+import Cotizations from '@/pages/documents/cotizations'
 
 function App () {
   const [theme, themeToggler] = useDarkMode()
@@ -29,6 +30,7 @@ function App () {
           <Route path='/clients' exact element={<Clients />} />
           <Route path='/colaborators' exact element={<Colaborators />} />
           <Route path='/documents/orders' exact element={<Orders />} />
+          <Route path='/documents/cotizations' exact element={<Cotizations />} />
         </Routes>
       </Router>
     </ThemeProvider>

@@ -102,6 +102,7 @@ export const InputStandard = styled.div`
     line-height: 20px;
     padding: 0 15px;
     transition: .3s all ease-in-out;
+    white-space: nowrap;
   }
 
   & input{

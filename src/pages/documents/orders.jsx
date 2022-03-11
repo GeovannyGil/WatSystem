@@ -1,6 +1,6 @@
 
 import styled from 'styled-components'
-import { TitleMain, TitleLine, TextDescription, SpanLabelLink } from '@/components/Elements/Texts'
+import { TitleMain, TitleLine, TextDescription, SpanLabelLink, SpanSelect } from '@/components/Elements/Texts'
 import { HeaderTitleSection } from '@/components/Elements/Layout'
 import { CardContent, CardHeader, CardTitle, CardDescription } from '@/components/Elements/Cards'
 import { ButtonPrimary, ButtonSecondary } from '../../components/Elements/Buttons'
@@ -22,7 +22,6 @@ const Grid = styled.div`
    grid-template-columns: 70% 30%;
   }
 `
-
 const SectionCreateOrder = styled.section`
   display: grid;
   grid-gap: 1.5rem;
@@ -32,7 +31,6 @@ const SectionCreateOrder = styled.section`
     grid-template-columns: 1fr 1fr;
   }
 `
-
 const FormOrder = styled.div`
   /* outline: 2px solid orange ; */
 `
@@ -40,14 +38,6 @@ const CardTitleSelect = styled(CardTitle)`
   color: var(--color-gray-light);
 `
 
-const SpanSelectClient = styled.span`
-  color: var(--color-white);
-  font-size: var(--smaller-font-size);
-  font-weight: var(--normal-font-size);
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-`
 const SectionRichText = styled.div`
   /* outline: 2px solid orange ; */
   margin-bottom: 15px;
@@ -102,8 +92,8 @@ const Orders = () => {
               <button className='Btn__icon'><BoxIcon.BiInfoCircle size='1.1em' /></button>
             </CardHeader>
             <div>
-              <SpanSelectClient>C-0000123</SpanSelectClient>
-              <SpanSelectClient>Angel Chajón</SpanSelectClient>
+              <SpanSelect>C-0000123</SpanSelect>
+              <SpanSelect>Angel Chajón</SpanSelect>
             </div>
           </CardContent>
           <TitleLine>Generales</TitleLine>
