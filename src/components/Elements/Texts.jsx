@@ -27,6 +27,18 @@ export const TextDescription = styled.div`
   font-size: var(--smaller-font-size);
   display: block;
 `
+
+export const SpanLabelLink = styled.span`
+  font-size: var(--xs-font-size);
+  margin: 10px 0;
+  display: block;
+  width: 100%;
+
+  a{
+    color: var(--primary-color);
+  }
+`
+
 export const TitleMain = ({ textNeutral, textColor }) => {
   return (
     <TitleHeader>{textNeutral}<span className='Focus__title'>{textColor}</span></TitleHeader>

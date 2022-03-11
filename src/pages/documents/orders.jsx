@@ -1,15 +1,25 @@
 
 import styled from 'styled-components'
-import { TitleMain, TitleLine, TextDescription } from '@/components/Elements/Texts'
+import { TitleMain, TitleLine, TextDescription, SpanLabelLink } from '@/components/Elements/Texts'
+import { HeaderTitleSection } from '@/components/Elements/Layout'
 import { CardContent, CardHeader, CardTitle, CardDescription } from '@/components/Elements/Cards'
 import * as BoxIcon from 'react-icons/bi'
 import { CheckInput, InputElement, InputElementSelect, FormGroupAction } from '@/components/Elements/Inputs'
+import { Tiptap } from '@/components/Elements/RichText'
 
 const Grid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 10px;
-  align-items: stretch;
+  align-items: center;
+
+  @media(min-width: 1280px) {
+   grid-template-columns: 80% 20%;
+  }
+
+  @media(min-width: 820px) {
+   grid-template-columns: 70% 30%;
+  }
 `
 
 const SectionCreateOrder = styled.section`
@@ -37,14 +47,33 @@ const SpanSelectClient = styled.span`
   width: 100%;
   margin: 10px 0;
 `
-//  outline: 2px solid orange ;
+const SectionRichText = styled.div`
+  /* outline: 2px solid orange ; */
+  margin-bottom: 15px;
+`
+
+const SpanOrderId = styled(SpanLabelLink)`
+  text-align: right;
+`
+
+const HeaderTitle = styled(HeaderTitleSection)`
+  margin-bottom: 25px;
+`
 
 const Orders = () => {
   return (
     <main>
-      <header className='Header__main-content'>
-        <TitleMain textNeutral='Crear' textColor=' Orden.' />
-      </header>
+      <HeaderTitle>
+        <Grid>
+          <TitleMain textNeutral='Crear' textColor=' Orden.' />
+          <div>
+            <InputElement label='No. de Orden:'>
+              <input type='text' disabled value='O-7956' />
+              <SpanOrderId>Último ingresaso: <a>C-000122</a></SpanOrderId>
+            </InputElement>
+          </div>
+        </Grid>
+      </HeaderTitle>
       <SectionCreateOrder>
         <FormOrder>
           <FormGroupAction label='Cliente'>
@@ -91,6 +120,9 @@ const Orders = () => {
             </TextDescription>
           </CardDescription>
         </FormOrder>
+        <SectionRichText>
+          <Tiptap />
+        </SectionRichText>
       </SectionCreateOrder>
     </main>
   )

@@ -265,10 +265,6 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   /*================= CONTENT MAIN GENERAL=====================*/
-  .Header__main-content{
-    margin-bottom: 15px;
-  }
-
   .title-page{
     display: flex;
     height: 90vh;
