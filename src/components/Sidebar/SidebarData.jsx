@@ -42,7 +42,7 @@ export const SidebarData = [
           },
           {
             title: 'Facturas',
-            path: '/documents/bills',
+            path: '/documents/invoice',
             icon: <RiIcons.RiArrowDropRightLine />
           },
           {
