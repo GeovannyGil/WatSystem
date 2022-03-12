@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const TitleLine = styled.h4`
-  color: var(--color-gray);
+  color: ${(props) => props.color === 'white' ? 'var(--color-white)' : 'var(--color-gray)'};
   font-size:var(--normal-font-size);
   font-weight: var(--font-semi-bold);
   border-bottom: 1px solid var(--color-gray);

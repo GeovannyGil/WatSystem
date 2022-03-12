@@ -2,8 +2,9 @@
 import styled from 'styled-components'
 import { TitleMain, TitleLine, SpanLabelLink, SpanSelect } from '@/components/Elements/Texts'
 import { HeaderTitleSection } from '@/components/Elements/Layout'
-import { CardContent, CardHeader, CardTitle, CardButtonAction, CardItem } from '@/components/Elements/Cards'
-import { ButtonPrimary, ButtonSecondary, ButtonIcon } from '../../components/Elements/Buttons'
+import { CardContent, CardHeader, CardTitle, CardButtonAction } from '@/components/Elements/Cards'
+import { Item, TableCard, SectionProducts, HeaderProducts } from '@/components/Elements/Documents/Cards'
+import { ButtonPrimary, ButtonSecondary } from '../../components/Elements/Buttons'
 import * as BoxIcon from 'react-icons/bi'
 import { InputElement, InputElementSelect, FormGroupAction } from '@/components/Elements/Inputs'
 
@@ -28,124 +29,35 @@ const SectionCreateCotization = styled.section`
   grid-template-columns: 1fr;
 
   @media(min-width: 1280px) {
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 40% 60%;
   }
 `
-
 const CardTitleSelect = styled(CardTitle)`
   color: var(--color-gray-light);
 `
-// PRODUCTS
-export const ContentItem = styled(CardItem)`
 
-  min-width: 400px;
-  background: rgb(31,30,30);
-  background: radial-gradient(circle, rgba(31,30,30,1) 0%, rgba(19,19,19,1) 74%, rgba(19,19,19,1) 100%);
-
+const SpanOrderId = styled(SpanLabelLink)`
+  text-align: right;
 `
 
-export const SectionProducts = styled.div`
-  margin-bottom: 15px;
+const HeaderTitle = styled(HeaderTitleSection)`
+  margin-bottom: 25px;
 `
 
-export const HeaderProducts = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 0 10px;
-
-  @media(min-width: 992px) {
-    grid-template-columns: 0.5fr 1fr 1fr;
-  }
-  @media(min-width: 1280px) {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-`
-export const TableCard = styled(CardContent)`
-  max-height: 100%;
-  width: 94vw;
-  @media(min-width: 1280px) {
-    width: 100% !important;
-  }
-
-  @media(min-width: 700px) {
-    width: 88vw;
-  }
-`
-const BtnActionAddProduct = styled(CardButtonAction)`
-  padding: 10px 20px;
-`
-
-const LabelTop = styled.label`
-  margin-bottom: 0 !important;
-  margin-right: 15px !important;
-`
-
-const DateTop = styled.span`
-  background-color: var(--primary-color);
-  color: var(--color-white);
-  border-radius: 8px;
-  padding: 2.5px 10px;
-`
-const DescTop = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: var(--small-font-size);
-`
-const DatesHeaderItem = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 10px;
-  align-items: center;
-  justify-content: space-between;
-
-  & ${DescTop}:last-child{
-    justify-content: flex-end;
-  }
-`
-
-const DescriptionItem = styled.div`
-  width: 100%;
-  height: 65px;
-  overflow: hidden;
-  margin: 10px 0;
-
-  &:hover {
-    height: auto;
-    /* position: absolute;
-    background-color: var(--alternate-background); */
-  }
-
-  p {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    word-wrap: break-word;
-  }
-`
-
-const TotalItem = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`
-
-const ContentTotalItem = styled.div`
-  display: grid;
-`
-
-const BtnActionsItems = styled.div`
+const ContentBtnActions = styled.div`
   display: flex;
   justify-content: flex-end;
-  align-items: center;
-  margin-top: 10px;
+  margin-top: 15px;
 `
-
-const TotalItemLabel = styled.label`
-  font-size: var(--normal-font-size) !important;
-  color: var(--color-white) !important;
+const BtnAction = styled(ButtonPrimary, ButtonSecondary)`
+    width: 100%;
+  @media(min-width: 680px) {
+    width: auto;
+  }
 `
-const TotalItemDate = styled.span`
-  font-size: var(--normal-font-size) !important;
-  font-size: var(--normal-font-size);
+// CARD PRODUCT
+const BtnActionAddProduct = styled(CardButtonAction)`
+  padding: 10px 20px;
 `
 
 const ContentItemsTable = styled.div`
@@ -164,70 +76,97 @@ const ContentItemsTable = styled.div`
     content: '';
     width: 10px;
   }
-
-
 `
+// CARD PRODUCT
 
-const Item = () => {
-  return (
-    <ContentItem>
-      <DatesHeaderItem>
-        <DescTop>
-          <LabelTop>Cantidad:</LabelTop>
-          <DateTop>5</DateTop>
-        </DescTop>
-        <DescTop>
-          <LabelTop>Precio:</LabelTop>
-          <DateTop>Q 80.00</DateTop>
-        </DescTop>
-      </DatesHeaderItem>
-      <DescriptionItem>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint aliquam minima recusandae eos modi ut, enim exercitationem molestiae hic laboriosam id consequatur distinctio quibusdam perferendis quos mollitia eligendi eaque repellendus? Iste ullam, modi sapiente dolores id explicabo cumque aperiam deleniti velit asperiores ipsam omnis voluptatum vero amet maiores vel ab eaque inventore. Officiis repudiandae inventore itaque vero quaerat, dolor quos?
-      </DescriptionItem>
-      <ContentTotalItem>
-        <TotalItem>
-          <TotalItemLabel>Subtotal</TotalItemLabel>
-          <TotalItemDate>Q 450.00</TotalItemDate>
-        </TotalItem>
-        <TotalItem>
-          <TotalItemLabel>Descuento</TotalItemLabel>
-          <TotalItemDate>Q 50.00</TotalItemDate>
-        </TotalItem>
-        <TotalItem>
-          <TotalItemLabel>Total</TotalItemLabel>
-          <TotalItemDate>Q 400.00</TotalItemDate>
-        </TotalItem>
-      </ContentTotalItem>
-      <BtnActionsItems>
-        <ButtonIcon><BoxIcon.BiEdit size='1.3em' /></ButtonIcon>
-        <ButtonIcon><BoxIcon.BiTrash size='1.3em' /></ButtonIcon>
-      </BtnActionsItems>
-    </ContentItem>
-  )
-}
+// MOUNT CONTENT
+export const MountContent = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px 15px;
+  margin-top: 10px;
 
-// PRODUCTS
-
-const SpanOrderId = styled(SpanLabelLink)`
-  text-align: right;
-`
-
-const HeaderTitle = styled(HeaderTitleSection)`
-  margin-bottom: 25px;
-`
-
-const ContentBtnActions = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 15px;
-`
-
-const BtnAction = styled(ButtonPrimary, ButtonSecondary)`
-    width: 100%;
   @media(min-width: 680px) {
-    width: auto;
+    grid-template-columns: 1fr 1fr;
   }
 `
+
+export const TextArea = styled.textarea`
+
+    background-color: transparent;
+    border: var(--border-style);
+    border-radius: 12px;
+    caret-color: var(--primary-color);
+    color: var(--color-white);
+    font-size: var(--small-font-size);
+    font-weight: normal;
+    outline: none;
+    padding: 15px;
+    width: 100%;
+    /* height: 300px; */
+    font-family: 'Poppins', sans-serif;
+    &:disabled{
+      color: var(--color-gray-light);
+    }
+
+    &::placeholder{
+      color: var(--color-gray-light);
+      font-weight: var(--font-semi-bold);
+    }
+`
+export const MountData = styled.div`
+  width: 100%;
+`
+
+export const MounDataItem = styled.div`
+  margin: 5px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-weight: var(--font-semi-bold);
+`
+export const MounDataLabel = styled.label`
+  color: var(--color-gray-light);
+
+`
+export const MounDataSpan = styled.span`
+  background-color: var(--alternate-background);
+  color: var(--color-white);
+  border-radius: 8px;
+  padding: 2.5px 10px;
+  text-align: center;
+`
+// MOUNT CONTENT
+
+// TEXTAREA LIMIT
+const limitTextAreaReact = (textarea, maxLength) => {
+  if (textarea.value.length > maxLength) {
+    textarea.value = textarea.value.substring(0, maxLength)
+  }
+  return textarea.value.length
+}
+
+export const TextLimit = styled.p`
+  margin-top: 5px;
+  font-size: var(--xs-font-size);
+  & span{
+    background-color: var(--alternate-background);
+    padding:5px 10px;
+    border-radius: 10px;
+    margin: 0 5px 0 0;
+  }
+`
+
+export const SpanLimitTextArea = () => {
+  return (
+    <TextLimit>
+      <span>
+        800
+      </span>
+      de 800 caracteres como limite
+    </TextLimit>
+  )
+}
+// TEXTAREA LIMIT
 
 const Cotizations = () => {
   return (
@@ -308,6 +247,29 @@ const Cotizations = () => {
               <Item />
             </ContentItemsTable>
           </TableCard>
+          <MountContent>
+            <div>
+              <TextArea placeholder='Descripción del trabajo'>
+              </TextArea>
+              <SpanLimitTextArea />
+            </div>
+            <MountData>
+              <TitleLine color='white'>Monto</TitleLine>
+              <MounDataItem>
+                <MounDataLabel>Subtotal</MounDataLabel>
+                <MounDataSpan>Q 450.00</MounDataSpan>
+              </MounDataItem>
+              <MounDataItem>
+                <MounDataLabel>Descuento</MounDataLabel>
+                <MounDataSpan>Q 50.00</MounDataSpan>
+              </MounDataItem>
+              <hr />
+              <MounDataItem>
+                <MounDataLabel>Total</MounDataLabel>
+                <MounDataSpan>Q 400.00</MounDataSpan>
+              </MounDataItem>
+            </MountData>
+          </MountContent>
           <ContentBtnActions>
             <BtnAction><BoxIcon.BiDetail /> Generar Cotización</BtnAction>
           </ContentBtnActions>

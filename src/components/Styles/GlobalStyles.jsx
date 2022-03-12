@@ -91,6 +91,7 @@ export const GlobalStyles = createGlobalStyle`
   /* Works on Chrome, Edge, and Safari */
   *::-webkit-scrollbar {
     width: 3px;
+    height: 7px;
   }
 
   *::-webkit-scrollbar-track {
@@ -106,6 +107,9 @@ export const GlobalStyles = createGlobalStyle`
     filter: ${({ theme }) => (theme === 'darkTheme') ? 'invert(0)' : 'invert(1)'};
   }
 
+  hr{
+    border-color: var(--color-gray);
+  }
   /*============== HEADER ==============*/
   .Header{
     top: 0;
