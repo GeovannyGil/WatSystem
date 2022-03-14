@@ -62,6 +62,7 @@ const uniqueid = () => {
 const Clients = () => {
   const [modalDirectionShow, setModalDirectionShow] = useState(false)
   const [modalPhoneShow, setModalPhoneShow] = useState(false)
+  const [modalEditPhoneShow, setModalEditPhoneShow] = useState(false)
   const [client, setClient] = useState({
     nit: '',
     code: 'C-000123',
@@ -86,6 +87,10 @@ const Clients = () => {
   })
   const [phoneClient, setPhone] = useState({
     id: uniqueid(),
+    phoneClient: ''
+  })
+  const [editPhone, setEditPhone] = useState({
+    id: '',
     phoneClient: ''
   })
 
@@ -167,6 +172,41 @@ const Clients = () => {
     }))
   }
 
+  // EDIT PHONE
+  const handleChangeEditPhone = ({ target: { name, value } }) => {
+    setEditPhone({ ...editPhone, [name]: value })
+  }
+
+  const handleEdit = (item) => {
+    setModalEditPhoneShow(true)
+    setEditPhone(item)
+  }
+
+  const handleModifyPhone = () => {
+    const edit = client.phones.listPhones.map(elem => {
+      if (elem.id === editPhone.id) {
+        console.log('Sí es')
+        return {
+          id: elem.id,
+          phoneClient: editPhone.phoneClient
+        }
+      }
+      return elem
+    })
+    setClient(prevState => ({
+      ...prevState,
+      phones: {
+        ...prevState.phones,
+        listPhones: edit
+      }
+    }))
+    setEditPhone({
+      id: '',
+      phoneClient: ''
+    })
+    setModalEditPhoneShow(false)
+  }
+
   return (
     <main>
       <header className='Header__main-content'>
@@ -236,6 +276,7 @@ const Clients = () => {
                       key={phone.id}
                       onPin={handlePin}
                       onDelete={handleDelete}
+                      onEdit={handleEdit}
                       active={client.phones.defaultPhone === phone.id && true}
                     />
                   ))
@@ -310,7 +351,8 @@ const Clients = () => {
                     onChange={handleChangePhone}
                     placeholder='Ingresa un télefono'
                     format='+(502) ####-####'
-                    allowEmptyFormatting mask='_'
+                    allowEmptyFormatting
+                    mask='_'
                   />
                 </Form.Group>
               </Col>
@@ -319,6 +361,34 @@ const Clients = () => {
         </ModalBody>
         <ModalFooter onHide={() => setModalPhoneShow(false)}>
           <Button className='BtnPrimary' onClick={handlePushPhone}>Agregar Télefono</Button>
+        </ModalFooter>
+      </ModalVertically>
+      {/* MODAL EDIT PHONE */}
+      <ModalVertically show={modalEditPhoneShow} onHide={() => setModalEditPhoneShow(false)} size='md'>
+        <ModalHeader textNeutral='Modificar' textColor='Télefono' />
+        <ModalBody>
+          <Container>
+            <Row>
+              <Col md={12}>
+                <Form.Group className='mb-3'>
+                  <NumberFormat
+                    customInput={Form.Control}
+                    type='text'
+                    name='phoneClient'
+                    onChange={handleChangeEditPhone}
+                    placeholder='Ingresa un télefono'
+                    format='+(502) ####-####'
+                    allowEmptyFormatting
+                    mask='_'
+                    value={editPhone.phoneClient}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+          </Container>
+        </ModalBody>
+        <ModalFooter onHide={() => setModalEditPhoneShow(false)}>
+          <Button className='BtnPrimary' onClick={handleModifyPhone}>Modificar Télefono</Button>
         </ModalFooter>
       </ModalVertically>
     </main>
