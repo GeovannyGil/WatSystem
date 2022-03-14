@@ -21,7 +21,8 @@
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.2.2",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "uuidv4": "^6.2.12"
   },
   "devDependencies": {
     "@s-ui/mono": "^2.21.0",
