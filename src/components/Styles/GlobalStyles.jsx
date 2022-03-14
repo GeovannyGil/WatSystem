@@ -232,6 +232,31 @@ export const GlobalStyles = createGlobalStyle`
     }
   }
 
+  /*================= BOOTSTRAP =====================*/
+  .LabelBForm{
+    color: var(--color-gray);
+  }
+
+  .BtnPrimary{
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    &:hover{
+      background-color: var(--primary-color-saturate);
+      border-color: var(--primary-color);
+    }
+  }
+
+  .BtnSecondary{
+    background-color: transparent;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    &:hover{
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+      color: var(--color-white);
+    }
+  }
+
   /*================= CONTENT MAIN GENERAL=====================*/
   .title-page{
     display: flex;

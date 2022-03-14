@@ -10,14 +10,14 @@ export const CardItemActions = styled.div`
   text-align: right;
 `
 
-export const CardItemClientDirection = ({ departament = 'Guatemala', municipality = 'Villa Nueva', direction = '5ta Avenida 96-5 Calle Colonia Buena Vista', active = false }) => {
+export const CardItemClientDirection = (props) => {
   return (
     <CardItem>
-      <label>Departamento: <span>{departament}</span></label>
-      <label>Municipio: <span>{municipality}</span></label>
-      <label>Dirección: <span>{direction}</span></label>
+      <label>Departamento: <span>{props.departament}</span></label>
+      <label>Municipio: <span>{props.municipality}</span></label>
+      <label>Dirección: <span>{props.directionClient}</span></label>
       <CardItemActions>
-        <ButtonIcon className={clsx(active && 'active')}><BoxIcon.BiPin /></ButtonIcon>
+        <ButtonIcon className={clsx(props.active && 'active')}><BoxIcon.BiPin /></ButtonIcon>
         <ButtonIcon><BoxIcon.BiPencil /></ButtonIcon>
         <ButtonIcon><BoxIcon.BiTrash /></ButtonIcon>
       </CardItemActions>
@@ -25,12 +25,12 @@ export const CardItemClientDirection = ({ departament = 'Guatemala', municipalit
   )
 }
 
-export const CardItemClientPhone = ({ phone = '4396-1286', active = false }) => {
+export const CardItemClientPhone = (props) => {
   return (
     <CardItem>
-      <label>Télefono: <span>{phone}</span></label>
+      <label>Télefono: <span>{props.phoneClient}</span></label>
       <CardItemActions>
-        <ButtonIcon className={clsx(active && 'active')}><BoxIcon.BiPin /></ButtonIcon>
+        <ButtonIcon className={clsx(props.active && 'active')}><BoxIcon.BiPin /></ButtonIcon>
         <ButtonIcon><BoxIcon.BiPencil /></ButtonIcon>
         <ButtonIcon><BoxIcon.BiTrash /></ButtonIcon>
       </CardItemActions>
