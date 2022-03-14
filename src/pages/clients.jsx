@@ -61,9 +61,11 @@ const uniqueid = () => {
 
 const Clients = () => {
   const [modalDirectionShow, setModalDirectionShow] = useState(false)
+  const [modalEditDirectionShow, setModalEditDirectionShow] = useState(false)
   const [modalPhoneShow, setModalPhoneShow] = useState(false)
   const [modalEditPhoneShow, setModalEditPhoneShow] = useState(false)
   const [client, setClient] = useState({
+    id: uniqueid(),
     nit: '',
     code: 'C-000123',
     business: '',
@@ -81,6 +83,12 @@ const Clients = () => {
   })
   const [directionClient, setDirection] = useState({
     id: uniqueid(),
+    departament: '',
+    municipality: '',
+    directionClient: ''
+  })
+  const [editDirection, setEditDirection] = useState({
+    id: '',
     departament: '',
     municipality: '',
     directionClient: ''
@@ -177,15 +185,20 @@ const Clients = () => {
     setEditPhone({ ...editPhone, [name]: value })
   }
 
-  const handleEdit = (item) => {
-    setModalEditPhoneShow(true)
-    setEditPhone(item)
+  const handleEdit = (key, item) => {
+    if (key === 'phone') {
+      setModalEditPhoneShow(true)
+      setEditPhone(item)
+      return
+    }
+
+    setModalEditDirectionShow(true)
+    setEditDirection(item)
   }
 
   const handleModifyPhone = () => {
     const edit = client.phones.listPhones.map(elem => {
       if (elem.id === editPhone.id) {
-        console.log('Sí es')
         return {
           id: elem.id,
           phoneClient: editPhone.phoneClient
@@ -205,6 +218,48 @@ const Clients = () => {
       phoneClient: ''
     })
     setModalEditPhoneShow(false)
+  }
+
+  // EDIT DIRECTION
+
+  const handleChangeSelectEditDirection = ({ target: { name, value } }) =>
+    setEditDirection({ ...editDirection, [name]: value })
+
+  const handleModifyDirection = () => {
+    const edit = client.directions.listDirections.map(elem => {
+      if (elem.id === editDirection.id) {
+        return {
+          id: elem.id,
+          departament: editDirection.departament,
+          municipality: editDirection.municipality,
+          directionClient: editDirection.directionClient
+        }
+      }
+      return elem
+    })
+    setClient(prevState => ({
+      ...prevState,
+      directions: {
+        ...prevState.directions,
+        listDirections: edit
+      }
+    }))
+    setEditDirection({
+      id: '',
+      departament: '',
+      municipality: '',
+      directionClient: ''
+    })
+    setModalEditDirectionShow(false)
+  }
+
+  // ADD CLIENT LOCALSTORAGE
+  const SetLocalStorage = () => {
+    let clientsL = JSON.parse(window.localStorage.getItem('clients'))
+    clientsL = clientsL || []
+    clientsL.push(client)
+    console.log(clientsL)
+    window.localStorage.setItem('clients', JSON.stringify(clientsL))
   }
 
   return (
@@ -240,7 +295,7 @@ const Clients = () => {
           <InputElement label='Correo Electrónico'>
             <input type='text' name='email' onChange={handleChange} value={client.email} />
           </InputElement>
-          <ButtonPrimary size='100%'>Agregar Cliente</ButtonPrimary>
+          <ButtonPrimary size='100%' onClick={SetLocalStorage}>Agregar Cliente</ButtonPrimary>
         </FormClient>
         <SectionClientTable>
           <Grid>
@@ -251,12 +306,16 @@ const Clients = () => {
               </CardHeader>
               <CardBody>
                 {
+                  client.directions.listDirections.length === 0 ? <div className='cardsItemsNull'>Aún no haz agregado ningúna dirección</div> : ''
+                }
+                {
                   client.directions.listDirections !== '' && client.directions.listDirections.map(direction => (
                     <CardItemClientDirection
                       {...direction}
                       key={direction.id}
                       onPin={handlePin}
                       onDelete={handleDelete}
+                      onEdit={handleEdit}
                       active={client.directions.defaultDirection === direction.id && true}
                     />
                   ))
@@ -270,16 +329,20 @@ const Clients = () => {
               </CardHeader>
               <CardBody>
                 {
-                  client.phones.listPhones !== '' && client.phones.listPhones.map(phone => (
-                    <CardItemClientPhone
-                      {...phone}
-                      key={phone.id}
-                      onPin={handlePin}
-                      onDelete={handleDelete}
-                      onEdit={handleEdit}
-                      active={client.phones.defaultPhone === phone.id && true}
-                    />
-                  ))
+                  client.phones.listPhones.length === 0 && <div className='cardsItemsNull'>Aún no haz agregado ningún télefono</div>
+                }
+                {
+                  client.phones.listPhones !== '' &&
+                    client.phones.listPhones.map(phone => (
+                      <CardItemClientPhone
+                        {...phone}
+                        key={phone.id}
+                        onPin={handlePin}
+                        onDelete={handleDelete}
+                        onEdit={handleEdit}
+                        active={client.phones.defaultPhone === phone.id && true}
+                      />
+                    ))
                 }
               </CardBody>
             </CardContent>
@@ -389,6 +452,75 @@ const Clients = () => {
         </ModalBody>
         <ModalFooter onHide={() => setModalEditPhoneShow(false)}>
           <Button className='BtnPrimary' onClick={handleModifyPhone}>Modificar Télefono</Button>
+        </ModalFooter>
+      </ModalVertically>
+      {/* MODAL EDIT DIRECTION */}
+      <ModalVertically show={modalEditDirectionShow} onHide={() => setModalEditDirectionShow(false)} size='md'>
+        <ModalHeader textNeutral='Modificar' textColor='dirección' />
+        <ModalBody>
+          <Container>
+            <Row>
+              <Col md={12}>
+                <Form.Group className='mb-3'>
+                  <Form.Control
+                    type='text'
+                    placeholder='Ingresar dirección'
+                    name='directionClient'
+                    onChange={handleChangeSelectEditDirection}
+                    value={editDirection.directionClient}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label className='LabelBForm'>Departamento</Form.Label>
+                  <Form.Select aria-label='Default select example' name='departament' onChange={handleChangeSelectEditDirection}>
+                    <option>Selecciona</option>
+                    {
+                      Object.keys(guatemala).map((obj) => (
+                        <option
+                          value={obj}
+                          key={obj}
+                          selected={editDirection.departament === obj}
+                        >
+                          {obj}
+                        </option>
+                      ))
+                    }
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label className='LabelBForm'>Municipio</Form.Label>
+                  <Form.Select
+                    aria-label='Default select example'
+                    disabled={editDirection.departament === '' && 'disabled'}
+                    name='municipality' onChange={handleChangeSelectEditDirection}
+                  >
+                    <option>Selecciona un municipio</option>
+                    {
+                      editDirection.departament !== '' &&
+                      (
+                        Object.entries(guatemala[editDirection.departament]).map((obj) => (
+                          <option
+                            value={obj[1]}
+                            key={obj[1]}
+                            selected={editDirection.municipality === obj[1]}
+                          >
+                            {obj[1]}
+                          </option>
+                        ))
+                      )
+                    }
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+            </Row>
+          </Container>
+        </ModalBody>
+        <ModalFooter onHide={() => setModalEditDirectionShow(false)}>
+          <Button className='BtnPrimary' onClick={handleModifyDirection}>Modificar dirección</Button>
         </ModalFooter>
       </ModalVertically>
     </main>

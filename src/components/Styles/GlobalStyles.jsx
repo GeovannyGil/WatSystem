@@ -257,12 +257,15 @@ export const GlobalStyles = createGlobalStyle`
     }
   }
 
-  /*================= CONTENT MAIN GENERAL=====================*/
-  .title-page{
+  /*================= CLIENTS =====================*/
+  .cardsItemsNull{
     display: flex;
-    height: 90vh;
     align-items: center;
     justify-content: center;
-    font-size: var(--title-section-font-size);
+    width: 100%;
+    height: 90%;
+    color: var(--color-gray-light);
+    font-weight: var(--font-semi-bold);
+    opacity: 0.5;
   }
 `

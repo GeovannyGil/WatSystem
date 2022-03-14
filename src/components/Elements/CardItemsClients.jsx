@@ -11,15 +11,21 @@ export const CardItemActions = styled.div`
 `
 
 export const CardItemClientDirection = (props) => {
+  const direction = {
+    id: props.id,
+    departament: props.departament,
+    municipality: props.municipality,
+    directionClient: props.directionClient
+  }
   return (
     <CardItem>
       <label>Departamento: <span>{props.departament}</span></label>
       <label>Municipio: <span>{props.municipality}</span></label>
       <label>Dirección: <span>{props.directionClient}</span></label>
       <CardItemActions>
-        <ButtonIcon className={clsx(props.active && 'active')} onClick={() => props.onPin('directions', 'defaultDirection', props.id)}><BoxIcon.BiPin /></ButtonIcon>
-        <ButtonIcon><BoxIcon.BiPencil /></ButtonIcon>
-        <ButtonIcon onClick={() => props.onDelete('directions', 'listDirections', 'defaultDirection', props.id)}><BoxIcon.BiTrash /></ButtonIcon>
+        <ButtonIcon className={clsx(props.active && 'active')} onClick={() => props.onPin('directions', 'defaultDirection', direction.id)}><BoxIcon.BiPin /></ButtonIcon>
+        <ButtonIcon onClick={() => props.onEdit('direction', direction)}><BoxIcon.BiPencil /></ButtonIcon>
+        <ButtonIcon onClick={() => props.onDelete('directions', 'listDirections', 'defaultDirection', direction.id)}><BoxIcon.BiTrash /></ButtonIcon>
       </CardItemActions>
     </CardItem>
   )
@@ -35,7 +41,7 @@ export const CardItemClientPhone = (props) => {
       <label>Télefono: <span>{props.phoneClient}</span></label>
       <CardItemActions>
         <ButtonIcon className={clsx(props.active && 'active')} onClick={() => props.onPin('phones', 'defaultPhone', phone.id)}><BoxIcon.BiPin /></ButtonIcon>
-        <ButtonIcon onClick={() => props.onEdit(phone)}><BoxIcon.BiPencil /></ButtonIcon>
+        <ButtonIcon onClick={() => props.onEdit('phone', phone)}><BoxIcon.BiPencil /></ButtonIcon>
         <ButtonIcon onClick={() => props.onDelete('phones', 'listPhones', 'defaultPhone', phone.id)}><BoxIcon.BiTrash /></ButtonIcon>
       </CardItemActions>
     </CardItem>
