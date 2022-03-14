@@ -20,10 +20,12 @@ import guatemala from '@/pages/api/guatemala'
 import { ModalVertically, ModalHeader, ModalBody, ModalFooter } from '../components/Elements/Modals'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import { v4 as uuid } from 'uuid'
+import NumberFormat from 'react-number-format'
+
 const Grid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-gap: 0 10px;
+  grid-gap: 10px 10px;
   align-items: center;
 `
 
@@ -67,10 +69,16 @@ const Clients = () => {
     names: '',
     surnames: '',
     email: '',
-    directions: [],
-    phones: []
+    directions: {
+      defaultDirection: '',
+      listDirections: []
+    },
+    phones: {
+      defaultPhone: '',
+      listPhones: []
+    }
   })
-  const [direction, setDirection] = useState({
+  const [directionClient, setDirection] = useState({
     id: uniqueid(),
     departament: '',
     municipality: '',
@@ -80,16 +88,24 @@ const Clients = () => {
     id: uniqueid(),
     phoneClient: ''
   })
-  // console.log(uuid().slice(0, 12))
 
   const handleChange = ({ target: { name, value } }) =>
     setClient({ ...client, [name]: value })
 
   const handleChangeSelectDirection = ({ target: { name, value } }) =>
-    setDirection({ ...direction, [name]: value })
+    setDirection({ ...directionClient, [name]: value })
+
   const handlePushDirection = () => {
-    setClient({ ...client, directions: [...client.directions, direction] })
-    console.log('Add direction')
+    setClient(prevState => ({
+      ...prevState,
+      directions: {
+        defaultDirection: client.directions.listDirections.length === 0 ? directionClient.id : prevState.directions.defaultDirection,
+        listDirections: [
+          ...prevState.directions.listDirections,
+          directionClient
+        ]
+      }
+    }))
     setDirection({
       id: uniqueid(),
       departament: '',
@@ -98,17 +114,57 @@ const Clients = () => {
     })
     setModalDirectionShow(false)
   }
+
   const handleChangePhone = ({ target: { name, value } }) => {
     setPhone({ ...phoneClient, [name]: value })
   }
+
   const handlePushPhone = () => {
-    setClient({ ...client, phones: [...client.phones, phoneClient] })
-    console.log('Add Phone')
+    setClient(prevState => ({
+      ...prevState,
+      phones: {
+        defaultPhone: client.phones.listPhones.length === 0 ? phoneClient.id : prevState.phones.defaultPhone,
+        listPhones: [
+          ...prevState.phones.listPhones,
+          phoneClient
+        ]
+      }
+    }))
     setPhone({
       id: uniqueid(),
       phoneClient: ''
     })
     setModalPhoneShow(false)
+  }
+
+  const handlePin = (key, defaultKey, id) => {
+    setClient(prevState => ({
+      ...prevState,
+      [key]: {
+        ...prevState[key],
+        [defaultKey]: id
+      }
+    }))
+  }
+
+  const handleDelete = (key, listKey, defaultKey, id) => {
+    const filter = client[key][listKey].filter(elem => {
+      return elem.id !== id
+    })
+
+    const handleDefaultOption = () => {
+      if (filter.length === 0) return ''
+      if (client[key][listKey].length > 1 && client[key][defaultKey] === id) return filter[0].id
+      return client[key][defaultKey]
+    }
+
+    setClient(prevState => ({
+      ...prevState,
+      [key]: {
+        [defaultKey]: handleDefaultOption(),
+        [listKey]: filter
+      }
+    }))
   }
 
   return (
@@ -155,8 +211,14 @@ const Clients = () => {
               </CardHeader>
               <CardBody>
                 {
-                  client.directions !== '' && client.directions.map(direction => (
-                    <CardItemClientDirection {...direction} key={direction.id} />
+                  client.directions.listDirections !== '' && client.directions.listDirections.map(direction => (
+                    <CardItemClientDirection
+                      {...direction}
+                      key={direction.id}
+                      onPin={handlePin}
+                      onDelete={handleDelete}
+                      active={client.directions.defaultDirection === direction.id && true}
+                    />
                   ))
                 }
               </CardBody>
@@ -168,8 +230,14 @@ const Clients = () => {
               </CardHeader>
               <CardBody>
                 {
-                  client.phones !== '' && client.phones.map(phone => (
-                    <CardItemClientPhone {...phone} key={phone.id} />
+                  client.phones.listPhones !== '' && client.phones.listPhones.map(phone => (
+                    <CardItemClientPhone
+                      {...phone}
+                      key={phone.id}
+                      onPin={handlePin}
+                      onDelete={handleDelete}
+                      active={client.phones.defaultPhone === phone.id && true}
+                    />
                   ))
                 }
               </CardBody>
@@ -206,14 +274,14 @@ const Clients = () => {
                   <Form.Label className='LabelBForm'>Municipio</Form.Label>
                   <Form.Select
                     aria-label='Default select example'
-                    disabled={direction.departament === '' && 'disabled'}
+                    disabled={directionClient.departament === '' && 'disabled'}
                     name='municipality' onChange={handleChangeSelectDirection}
                   >
                     <option>Selecciona un municipio</option>
                     {
-                      direction.departament !== '' &&
+                      directionClient.departament !== '' &&
                       (
-                        Object.entries(guatemala[direction.departament]).map((obj) => (
+                        Object.entries(guatemala[directionClient.departament]).map((obj) => (
                           <option value={obj[1]} key={obj[1]}>{obj[1]}</option>
                         ))
                       )
@@ -236,7 +304,14 @@ const Clients = () => {
             <Row>
               <Col md={12}>
                 <Form.Group className='mb-3'>
-                  <Form.Control type='text' name='phoneClient' onChange={handleChangePhone} placeholder='Ingresar dirección' />
+                  <NumberFormat
+                    customInput={Form.Control}
+                    type='text' name='phoneClient'
+                    onChange={handleChangePhone}
+                    placeholder='Ingresa un télefono'
+                    format='+(502) ####-####'
+                    allowEmptyFormatting mask='_'
+                  />
                 </Form.Group>
               </Col>
             </Row>
