@@ -249,8 +249,7 @@ const Cotizations = () => {
           </TableCard>
           <MountContent>
             <div>
-              <TextArea placeholder='Descripción del trabajo'>
-              </TextArea>
+              <TextArea placeholder='Descripción del trabajo' />
               <SpanLimitTextArea />
             </div>
             <MountData>
