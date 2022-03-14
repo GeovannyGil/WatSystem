@@ -5,7 +5,6 @@ import {
 import { ButtonIcon } from '@/components/Elements/Buttons'
 import * as BoxIcon from 'react-icons/bi'
 import styled from 'styled-components'
-import { useState } from 'react'
 
 export const CardItemActions = styled.div`
   text-align: right;
@@ -27,13 +26,17 @@ export const CardItemClientDirection = (props) => {
 }
 
 export const CardItemClientPhone = (props) => {
+  const phone = {
+    id: props.id,
+    phoneClient: props.phoneClient
+  }
   return (
     <CardItem>
       <label>Télefono: <span>{props.phoneClient}</span></label>
       <CardItemActions>
-        <ButtonIcon className={clsx(props.active && 'active')} onClick={() => props.onPin('phones', 'defaultPhone', props.id)}><BoxIcon.BiPin /></ButtonIcon>
-        <ButtonIcon><BoxIcon.BiPencil /></ButtonIcon>
-        <ButtonIcon onClick={() => props.onDelete('phones', 'listPhones', 'defaultPhone', props.id)}><BoxIcon.BiTrash /></ButtonIcon>
+        <ButtonIcon className={clsx(props.active && 'active')} onClick={() => props.onPin('phones', 'defaultPhone', phone.id)}><BoxIcon.BiPin /></ButtonIcon>
+        <ButtonIcon onClick={() => props.onEdit(phone)}><BoxIcon.BiPencil /></ButtonIcon>
+        <ButtonIcon onClick={() => props.onDelete('phones', 'listPhones', 'defaultPhone', phone.id)}><BoxIcon.BiTrash /></ButtonIcon>
       </CardItemActions>
     </CardItem>
   )
