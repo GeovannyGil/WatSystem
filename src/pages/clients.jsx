@@ -17,9 +17,9 @@ import * as BoxIcon from 'react-icons/bi'
 import { useState } from 'react'
 import companies from '@/pages/api/companies'
 import guatemala from '@/pages/api/guatemala'
-import { ModalVertically, ModalHeader, ModalBody, ModalFooter } from '../components/Elements/Modals'
+import { ModalVertically, ModalHeader, ModalBody, ModalFooter } from '@/components/Elements/Modals'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
-import { v4 as uuid } from 'uuid'
+import uniqueid from '@/services/generateId'
 import NumberFormat from 'react-number-format'
 
 const Grid = styled.div`
@@ -54,10 +54,6 @@ const FormClient = styled.div`
 const SectionClientTable = styled.div`
   /* outline: 2px solid orange ; */
 `
-
-const uniqueid = () => {
-  return uuid().slice(0, 12)
-}
 
 const Clients = () => {
   const [modalDirectionShow, setModalDirectionShow] = useState(false)

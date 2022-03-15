@@ -268,4 +268,11 @@ export const GlobalStyles = createGlobalStyle`
     font-weight: var(--font-semi-bold);
     opacity: 0.5;
   }
+
+  .badgeIC {
+    width: 100%;
+    text-align: center;
+    ${'' /* color: var(--color-black); */}
+    background-color: var(--color-gray)  !important;
+  }
 `

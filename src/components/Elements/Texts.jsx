@@ -35,7 +35,7 @@ export const SpanLabelLink = styled.span`
   width: 100%;
 
   a{
-    color: var(--primary-color);
+    color: var(--primary-color) !important;
   }
 `
 

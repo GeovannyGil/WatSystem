@@ -1,0 +1,22 @@
+[
+  {
+    "id": "90cba3574700d4aedef31aa4fb3ddcfb7d7f7bc5",
+    "state": "Cita Pendiente"
+  },
+  {
+    "id": "693edc033f238aef13c2ce447d6b67f869065ba9",
+    "state": "Envio de cotización"
+  },
+  {
+    "id": "b4b7698569dfb9ed8150925d00025922f886d0f8",
+    "state": "Pendiente"
+  },
+  {
+    "id": "d850fc47ba95db81a690576fbdc87176644f9a1c",
+    "state": "Cancelado"
+  },
+  {
+    "id": "1be2090b2dfc2fbf1ad16701c12fea952feb2a2f",
+    "state": "Por bono"
+  }
+]
