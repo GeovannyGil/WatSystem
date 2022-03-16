@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import { TitleMain, TitleLine, SubTitles, TextDescription, SpanLabelLink, SpanSelect } from '@/components/Elements/Texts'
 import { HeaderTitleSection } from '@/components/Elements/Layout'
@@ -8,10 +8,11 @@ import * as BoxIcon from 'react-icons/bi'
 import { CheckInput, InputElement, InputElementSelect, FormGroupAction } from '@/components/Elements/Inputs'
 import { Tiptap } from '@/components/Elements/RichText'
 import colaborator from '@/pages/api/colaborator'
+import guatemala from '@/pages/api/guatemala'
 import states from '@/pages/api/states'
 import uniqueid from '@/services/generateId'
 import { ModalVertically, ModalHeader, ModalBody, ModalFooter } from '@/components/Elements/Modals'
-import { Container, Row, Col, Form, Button, Badge } from 'react-bootstrap'
+import { Container, Row, Col, Badge, Form, Button, ButtonGroup, ToggleButton } from 'react-bootstrap'
 import clsx from 'clsx'
 
 const Grid = styled.div`
@@ -69,6 +70,10 @@ const BtnAction = styled(ButtonPrimary, ButtonSecondary)`
     width: auto;
   }
 `
+const radios = [
+  { name: 'Dirección del cliente', value: 'client' },
+  { name: 'Otra dirección', value: 'other' }
+]
 
 const InfoClient = (props) => {
   return (
@@ -125,18 +130,32 @@ const InfoClientPhone = (props) => {
 }
 
 const Orders = () => {
+  const [modalCite, setModalCite] = useState(false)
   const [modalInfoClient, setModalInfoClient] = useState(false)
+  const [radioValue, setRadioValue] = useState('client')
+  const checkCite = useRef(null)
   const [order, setOrder] = useState({
     id: uniqueid(),
     code: 'O-7656',
     client: {
       id: '',
-      directionSelect: '',
       phoneSelect: ''
     },
     dateOrder: '',
     colaborator: '',
-    stateOrder: ''
+    stateOrder: '',
+    cite: {
+      citeState: false,
+      type: 'client',
+      data: {}
+    }
+  })
+  const [clientDirectionSelect, setClientDirectionSelect] = useState({
+    id: '',
+    dateCite: '',
+    direction: '',
+    departament: '',
+    municipality: ''
   })
 
   const [clients, setClients] = useState([])
@@ -190,22 +209,31 @@ const Orders = () => {
         ...prevState,
         client: {
           ...prevState.client,
-          directionSelect: clientSelected.directions.defaultDirection,
           phoneSelect: clientSelected.phones.defaultPhone
+        },
+        cite: {
+          citeState: false,
+          type: 'client',
+          data: {}
         }
       }))
+      if (clientSelected.directions.defaultDirection) {
+        setClientDirectionSelect({ ...clientDirectionSelect, id: clientSelected.directions.defaultDirection })
+      }
     }
   }, [clientSelected, order.client.id])
 
+  useEffect(() => {
+    if (modalCite === false && order.cite.citeState === false) {
+      console.log('No se agendo nada')
+      checkCite.current.checked = false
+    }
+  }, [modalCite])
+
   const handleChangeDefaultClient = (key, id) => {
+    // PART OF CITE
     if (key === 'direction') {
-      setOrder(prevState => ({
-        ...prevState,
-        client: {
-          ...prevState.client,
-          directionSelect: id
-        }
-      }))
+      setClientDirectionSelect({ ...clientDirectionSelect, id })
       return
     }
 
@@ -214,6 +242,52 @@ const Orders = () => {
       client: {
         ...prevState.client,
         phoneSelect: id
+      }
+    }))
+  }
+
+  const handleOtherDirection = ({ target: { name, value } }) =>
+    setClientDirectionSelect({ ...clientDirectionSelect, [name]: value })
+
+  const handleCheckCite = ({ target }) => {
+    if (target.checked === true) {
+      setModalCite(target.checked)
+      return
+    }
+
+    if (target.checked === false && order.cite.citeState === true) {
+      setOrder(prevState => ({
+        ...prevState,
+        cite: {
+          ...prevState.cite,
+          citeState: false
+        }
+      }))
+    }
+  }
+
+  const handleAgendCite = () => {
+    let objD = {}
+    if (radioValue === 'other') {
+      objD = {
+        dateCite: clientDirectionSelect.dateCite,
+        direction: clientDirectionSelect.direction,
+        departament: clientDirectionSelect.departament,
+        municipality: clientDirectionSelect.municipality
+      }
+    } else {
+      objD = {
+        id: clientDirectionSelect.id,
+        dateCite: clientDirectionSelect.dateCite
+      }
+    }
+    setOrder(prevState => ({
+      ...prevState,
+      cite: {
+        ...prevState.cite,
+        citeState: true,
+        type: radioValue,
+        data: objD
       }
     }))
   }
@@ -275,16 +349,33 @@ const Orders = () => {
             </select>
           </InputElementSelect>
           <CheckInput text='Agendar Cita'>
-            <input type='checkbox' />
+            <input type='checkbox' onChange={handleCheckCite} ref={checkCite} />
           </CheckInput>
-          <CardDescription label='Datos de la cita'>
-            <TextDescription>
-              0 Av. 7-7 Buena vista, Sumpango Sacatepéquez
-            </TextDescription>
-            <TextDescription>
-              05 de Noviembre del 2021 15:00hrs
-            </TextDescription>
-          </CardDescription>
+          {
+            order.cite.citeState &&
+              <CardDescription label='Datos de la cita'>
+                {
+                order.cite.type === 'client'
+                  ? clientSelected.directions.listDirections.map((elem) => {
+                      return order.cite.data?.id === elem.id &&
+                        (
+                          <>
+                            <TextDescription>{elem.directionClient}</TextDescription>
+                            <TextDescription>{elem.departament} - {elem.municipality}</TextDescription>
+                            <TextDescription>{order.cite.data.dateCite}</TextDescription>
+                          </>
+                        )
+                    })
+                  : (
+                    <>
+                      <TextDescription>{order.cite.data.direction}</TextDescription>
+                      <TextDescription>{order.cite.data.departament} - {order.cite.data.municipality}</TextDescription>
+                      <TextDescription>{order.cite.data.dateCite}</TextDescription>
+                    </>
+                    )
+                }
+              </CardDescription>
+          }
         </FormOrder>
         <SectionRichText>
           <Tiptap />
@@ -304,20 +395,7 @@ const Orders = () => {
               <InfoClient label='NIT:' value={clientSelected.nit} />
               <InfoClient label='Empresa:' value={clientSelected.business} />
               <InfoClient label='Correo:' value={clientSelected.email} />
-              <Col md={8} className='mt-3'>
-                <SubTitles>Direcciones</SubTitles>
-                {
-                  clientSelected.directions.listDirections.length !== 0 && clientSelected.directions.listDirections.map(elem =>
-                    <InfoClientDirection
-                      key={elem.id}
-                      {...elem}
-                      active={elem.id === order.client.directionSelect}
-                      onSelect={handleChangeDefaultClient}
-                    />
-                  )
-                }
-              </Col>
-              <Col md={4} className='mt-3'>
+              <Col md={6} className='mt-3'>
                 <SubTitles>Télefonos</SubTitles>
                 {
                   clientSelected.phones.listPhones.length !== 0 && clientSelected.phones.listPhones.map(elem =>
@@ -333,8 +411,124 @@ const Orders = () => {
             </Row>
           </Container>
         </ModalBody>
-        <ModalFooter onHide={() => setModalInfoClient(false)}>
-          {/* <Button className='BtnPrimary' onClick={handleModifyPhone}>Modificar Télefono</Button> */}
+        <ModalFooter onHide={() => setModalInfoClient(false)} />
+      </ModalVertically>
+      {/* MODAL EDIT PHONE */}
+      <ModalVertically show={modalCite} onHide={() => setModalCite(false)} size='md'>
+        <ModalHeader textNeutral='Agendar' textColor='Cita' />
+        <ModalBody>
+          <Container>
+            <Row>
+              <ButtonGroup>
+                {radios.map((radio, idx) => (
+                  <ToggleButton
+                    key={idx}
+                    id={`radio-${idx}`}
+                    type='radio'
+                    variant='outline-primary'
+                    name='radio'
+                    value={radio.value}
+                    checked={radioValue === radio.value}
+                    onChange={(e) => setRadioValue(e.currentTarget.value)}
+                  >
+                    {radio.name}
+                  </ToggleButton>
+                ))}
+              </ButtonGroup>
+              <Col md={12}>
+                <Form.Group className='my-3'>
+                  <Form.Label className='LabelBForm'>Fecha de la cita:</Form.Label>
+                  <Form.Control
+                    type='datetime-local'
+                    placeholder=''
+                    name='dateCite'
+                    onChange={handleOtherDirection}
+                    value={order.cite.data?.dateCite}
+                  />
+                </Form.Group>
+              </Col>
+              {
+                radioValue === 'client' &&
+                  <>
+                    <Col md={12} className='mt-3'>
+                      <SubTitles>Direcciones del cliente</SubTitles>
+                      {
+                        clientSelected.directions.listDirections.length !== 0 && clientSelected.directions.listDirections.map(elem =>
+                          <InfoClientDirection
+                            key={elem.id}
+                            {...elem}
+                            active={elem.id === clientDirectionSelect?.id}
+                            onSelect={handleChangeDefaultClient}
+                          />
+                        )
+                      }
+                    </Col>
+                  </>
+              }
+              {
+                radioValue === 'other' &&
+                  <>
+                    <Col md={12}>
+                      <SubTitles>Otra dirección</SubTitles>
+                      <Form.Group className='my-3'>
+                        <Form.Control
+                          type='text'
+                          placeholder='Ingresar dirección'
+                          name='direction'
+                          onChange={handleOtherDirection}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group>
+                        <Form.Label className='LabelBForm'>Departamento</Form.Label>
+                        <Form.Select aria-label='Default select example' name='departament' onChange={handleOtherDirection}>
+                          <option>Selecciona</option>
+                          {
+                            Object.keys(guatemala).map((obj) => (
+                              <option
+                                value={obj}
+                                key={obj}
+                              >
+                                {obj}
+                              </option>
+                            ))
+                          }
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group>
+                        <Form.Label className='LabelBForm'>Municipio</Form.Label>
+                        <Form.Select
+                          aria-label='Default select example'
+                          disabled={clientDirectionSelect.departament === '' && 'disabled'}
+                          name='municipality' onChange={handleOtherDirection}
+                        >
+                          <option>Selecciona un municipio</option>
+                          {
+                            clientDirectionSelect.departament !== '' &&
+                            (
+                              Object.entries(guatemala[clientDirectionSelect.departament]).map((obj) => (
+                                <option
+                                  value={obj[1]}
+                                  key={obj[1]}
+                                >
+                                  {obj[1]}
+                                </option>
+                              ))
+                            )
+                          }
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+                  </>
+              }
+            </Row>
+          </Container>
+        </ModalBody>
+        <ModalFooter onHide={() => setModalCite(false)}>
+          <Button className='BtnPrimary' onClick={handleAgendCite}>Agenddar Cita</Button>
         </ModalFooter>
       </ModalVertically>
     </main>

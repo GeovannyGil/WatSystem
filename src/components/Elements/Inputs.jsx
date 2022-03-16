@@ -21,7 +21,7 @@ export const Checkbox = styled.label`
     cursor: not-allowed;
   }
 
-  input[type="checkbox"] {
+  input[type="checkbox"]{
     /* Add if not using autoprefixer */
     -webkit-appearance: none;
     /* Remove most all native input styles */
